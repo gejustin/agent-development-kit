@@ -6,7 +6,7 @@ Gary's personal agent workflows, packaged as portable plugins. Claude Code consu
 
 | Plugin | Claude Code | Cursor | Codex | Status | Purpose |
 | --- | --- | --- | --- | --- | --- |
-| [`context-framework`](plugins/context-framework/README.md) | Yes | Yes | Yes | WIP | Standardize how in-repo AI context is created and consumed, tool-agnostic. |
+| [`context-framework`](plugins/context-framework/README.md) | Yes | WIP | Yes | WIP | Standardize how in-repo AI context is created and consumed, tool-agnostic. |
 
 ## Installation
 
@@ -23,18 +23,9 @@ Gary's personal agent workflows, packaged as portable plugins. Claude Code consu
 /plugin install context-framework@agent-development-kit
 ```
 
-### Cursor (IDE + `agent` CLI)
+### Cursor
 
-Clone and symlink each skill into `~/.cursor/skills-cursor/`. Works for both the Cursor IDE and the Cursor CLI (`agent` / `cursor-agent`).
-
-```bash
-git clone git@github.com:gejustin/agent-development-kit.git
-cd agent-development-kit
-mkdir -p ~/.cursor/skills-cursor
-ln -s "$(pwd)/plugins/context-framework/skills/create-context" ~/.cursor/skills-cursor/create-context
-```
-
-No reload needed for the CLI. In the IDE, run **Developer: Reload Window** once. `git pull` picks up updates.
+Not yet. The repo ships `.cursor-plugin/marketplace.json` so the structure is ready, but Cursor has no local-marketplace CLI command and the IDE local-plugin path does not feed the `agent` CLI. Will revisit when Cursor unifies plugin resolution between CLI and IDE.
 
 ### Codex CLI
 
