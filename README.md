@@ -25,13 +25,17 @@ Gary's personal agent workflows, packaged as portable plugins. Claude Code consu
 
 ### Cursor
 
-Clone locally, then point Cursor at it as a local marketplace.
+Clone and symlink the plugin into `~/.cursor/plugins/local/`, then reload Cursor.
 
 ```bash
 git clone git@github.com:gejustin/agent-development-kit.git
+mkdir -p ~/.cursor/plugins/local
+ln -s "$(pwd)/agent-development-kit/plugins/context-framework" ~/.cursor/plugins/local/context-framework
 ```
 
-Open the clone in Cursor. Cursor reads `.cursor-plugin/marketplace.json` and offers the plugins via `/add-plugin`.
+In Cursor, run **Developer: Reload Window**. `git pull` picks up updates — no reinstall needed.
+
+Team-wide install (admin): Dashboard → Settings → Plugins → Team Marketplaces → Import, paste the repo URL. Requires Teams/Enterprise.
 
 ### Codex CLI
 
