@@ -23,17 +23,18 @@ Gary's personal agent workflows, packaged as portable plugins. Claude Code consu
 /plugin install context-framework@agent-development-kit
 ```
 
-### Cursor
+### Cursor (IDE + `agent` CLI)
 
-Clone and symlink the plugin into `~/.cursor/plugins/local/`, then reload Cursor.
+Clone and symlink each skill into `~/.cursor/skills-cursor/`. Works for both the Cursor IDE and the Cursor CLI (`agent` / `cursor-agent`).
 
 ```bash
 git clone git@github.com:gejustin/agent-development-kit.git
-mkdir -p ~/.cursor/plugins/local
-ln -s "$(pwd)/agent-development-kit/plugins/context-framework" ~/.cursor/plugins/local/context-framework
+cd agent-development-kit
+mkdir -p ~/.cursor/skills-cursor
+ln -s "$(pwd)/plugins/context-framework/skills/create-context" ~/.cursor/skills-cursor/create-context
 ```
 
-In Cursor, run **Developer: Reload Window**. `git pull` picks up updates — no reinstall needed.
+No reload needed for the CLI. In the IDE, run **Developer: Reload Window** once. `git pull` picks up updates.
 
 ### Codex CLI
 
