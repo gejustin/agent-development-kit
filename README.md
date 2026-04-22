@@ -35,7 +35,7 @@ ln -s "$(pwd)/agent-development-kit/plugins/context-framework" ~/.cursor/plugins
 
 In Cursor, run **Developer: Reload Window**. `git pull` picks up updates — no reinstall needed.
 
-Team-wide install (admin): Dashboard → Settings → Plugins → Team Marketplaces → Import, paste the repo URL. Requires Teams/Enterprise.
+The repo keeps the Cursor marketplace structure so a team admin *can* import it later, but that is not the recommended install path today.
 
 ### Codex CLI
 
