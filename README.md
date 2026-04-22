@@ -7,6 +7,7 @@ Gary's personal agent workflows, packaged as portable plugins. Claude Code consu
 | Plugin | Claude Code | Cursor | Codex | Status | Purpose |
 | --- | --- | --- | --- | --- | --- |
 | [`context-framework`](plugins/context-framework/README.md) | Yes | IDE only | Yes | WIP | Standardize how in-repo AI context is created and consumed, tool-agnostic. |
+| [`core`](plugins/core/README.md) | Yes | IDE only | Yes | Ready | Portable engineering-discipline skills. Currently: `autoresearch`. |
 
 ## Installation
 

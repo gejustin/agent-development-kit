@@ -11,6 +11,11 @@
       "name": "context-framework",
       "source": "plugins/context-framework",
       "description": "Interview-driven authoring of AI context (skills, AGENTS.md guides, guardrail specs) against a portable context framework, with evidence attached"
+    },
+    {
+      "name": "core",
+      "source": "plugins/core",
+      "description": "Portable engineering-discipline skills — autoresearch and more to come"
     }
   ]
 }

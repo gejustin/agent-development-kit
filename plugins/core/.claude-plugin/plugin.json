@@ -1,0 +1,15 @@
+{
+  "name": "core",
+  "version": "0.1.0",
+  "description": "Portable engineering-discipline skills — autoresearch and more to come",
+  "author": {
+    "name": "Gary Justin"
+  },
+  "license": "MIT",
+  "keywords": [
+    "autoresearch",
+    "optimization",
+    "autonomous-loop",
+    "engineering-discipline"
+  ]
+}
