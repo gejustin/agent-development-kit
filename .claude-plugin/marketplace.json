@@ -25,6 +25,22 @@
         "context-engineering",
         "authoring"
       ]
+    },
+    {
+      "name": "core",
+      "source": "./plugins/core",
+      "description": "Portable engineering-discipline skills — autoresearch and more to come",
+      "version": "0.1.0",
+      "author": {
+        "name": "Gary Justin"
+      },
+      "license": "MIT",
+      "keywords": [
+        "autoresearch",
+        "optimization",
+        "autonomous-loop",
+        "engineering-discipline"
+      ]
     }
   ]
 }
