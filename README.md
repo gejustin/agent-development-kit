@@ -25,14 +25,21 @@ Gary's personal agent workflows, packaged as portable plugins. Claude Code consu
 
 ### Cursor
 
-1. An admin imports this repository in Cursor Dashboard under Team Marketplaces.
-2. Install an available plugin from that marketplace with `/add-plugin`.
+Clone locally, then point Cursor at it as a local marketplace.
+
+```bash
+git clone git@github.com:gejustin/agent-development-kit.git
+```
+
+Open the clone in Cursor. Cursor reads `.cursor-plugin/marketplace.json` and offers the plugins via `/add-plugin`.
 
 ### Codex CLI
 
-1. Clone or open this repository in Codex.
-2. Codex discovers `.agents/plugins/marketplace.json`.
-3. Open `/plugins` and install an available plugin from the local marketplace.
+```bash
+codex plugin marketplace add gejustin/agent-development-kit
+```
+
+Then open `/plugins` and install `context-framework`.
 
 ## License
 
