@@ -1,0 +1,30 @@
+{
+  "name": "agent-development-kit",
+  "owner": {
+    "name": "Gary Justin"
+  },
+  "metadata": {
+    "description": "Personal plugin library for agent development — portable skills, guides, and guardrails across Claude, Cursor, and Codex",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "context-framework",
+      "source": "./plugins/context-framework",
+      "description": "Interview-driven authoring of AI context (skills, AGENTS.md guides, guardrail specs) against a portable context framework, with evidence attached",
+      "version": "0.1.0",
+      "author": {
+        "name": "Gary Justin"
+      },
+      "license": "MIT",
+      "keywords": [
+        "ai-context",
+        "skills",
+        "agents-md",
+        "guardrails",
+        "context-engineering",
+        "authoring"
+      ]
+    }
+  ]
+}

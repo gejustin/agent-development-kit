@@ -1,0 +1,17 @@
+{
+  "name": "context-framework",
+  "version": "0.1.0",
+  "description": "Interview-driven authoring of AI context (skills, AGENTS.md guides, guardrail specs) against a portable context framework, with evidence attached",
+  "author": {
+    "name": "Gary Justin"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ai-context",
+    "skills",
+    "agents-md",
+    "guardrails",
+    "context-engineering",
+    "authoring"
+  ]
+}

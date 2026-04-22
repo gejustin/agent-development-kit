@@ -1,0 +1,19 @@
+{
+  "name": "agent-development-kit",
+  "interface": {
+    "displayName": "Agent Development Kit"
+  },
+  "plugins": [
+    {
+      "name": "context-framework",
+      "source": {
+        "source": "local",
+        "path": "./plugins/context-framework"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Context Engineering"
+    }
+  ]
+}
