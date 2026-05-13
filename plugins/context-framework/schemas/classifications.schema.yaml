@@ -1,0 +1,39 @@
+# Pins the classifications artifact (TSV → list of dicts). One row per substantive rule.
+# Produced by: skills/migrate-context (onboard phase). Consumed by: plan + apply phases.
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://context-framework/schemas/classifications.schema.yaml"
+title: Classifications
+type: array
+items:
+  type: object
+  additionalProperties: false
+  required:
+    - rule_id
+    - source_path
+    - rule_text
+    - classification
+    - target_path
+    - reach
+    - activation
+    - rationale
+  properties:
+    rule_id:
+      type: string
+      pattern: "^[a-z0-9][a-z0-9-]*$"
+    source_path:
+      type: string
+    rule_text:
+      type: string
+    classification:
+      type: string
+      enum: [DELETE, GUARDRAIL, GUIDE_ROOT, GUIDE_NESTED, SKILL, SUBAGENT]
+    target_path:
+      type: string
+    reach:
+      type: string
+      enum: [global, repo, path, task]
+    activation:
+      type: string
+      enum: [always, on_path, on_event, on_match, on_invoke]
+    rationale:
+      type: string

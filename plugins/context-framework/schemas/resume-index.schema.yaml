@@ -1,0 +1,93 @@
+# Pins the resume-index state checkpoint. Allows migrate-context to halt and resume.
+# Produced + consumed by: skills/migrate-context (every phase).
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://context-framework/schemas/resume-index.schema.yaml"
+title: ResumeIndex
+type: object
+additionalProperties: false
+required:
+  - plugin_version
+  - doctrine_version
+  - slice
+  - started_at
+  - updated_at
+  - latest_phase
+  - next_allowed_phase
+  - artifacts
+  - gates_passed
+properties:
+  plugin_version:
+    type: string
+  doctrine_version:
+    type: integer
+    minimum: 1
+  slice:
+    type: string
+  started_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  latest_phase:
+    type: string
+    enum: [onboard, plan, apply, enrich, review, grade]
+  next_allowed_phase:
+    type: string
+    enum: [onboard, plan, apply, enrich, review, grade, done]
+  artifacts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - path
+        - sha256
+        - phase
+        - kind
+      properties:
+        path:
+          type: string
+        sha256:
+          type: string
+          pattern: "^[a-f0-9]{64}$"
+        phase:
+          type: string
+          enum: [onboard, plan, apply, enrich, review, grade]
+        kind:
+          type: string
+  gates_passed:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - gate_id
+        - passed_at
+        - reviewer
+      properties:
+        gate_id:
+          type: string
+        passed_at:
+          type: string
+          format: date-time
+        reviewer:
+          type: string
+  blockers:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - phase
+        - description
+        - created_at
+      properties:
+        phase:
+          type: string
+          enum: [onboard, plan, apply, enrich, review, grade]
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time

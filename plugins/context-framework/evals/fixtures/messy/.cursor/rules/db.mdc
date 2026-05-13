@@ -1,0 +1,10 @@
+---
+description: Database access rules
+globs: db/**, src/db/**
+---
+
+# Database access
+
+All database access goes through `src/db/` repository functions, not direct `pg.Pool` calls.
+Migrations are append-only. Never edit a numbered migration after it has shipped to production.
+The `orders.shipped_at` column is tz-naive but recorded in UTC.

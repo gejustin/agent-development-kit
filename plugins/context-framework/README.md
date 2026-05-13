@@ -1,12 +1,19 @@
 # context-framework
 
-Interview-driven authoring of AI context (skills, `AGENTS.md` guides, guardrail specs) against a portable context framework, with evidence attached.
-
-One skill. One doctrine. Three templates. Enough to move a rule out of someone's head and into the repo with proof it activates.
+Author and migrate AI context using four primitives. Mechanical-first. Structured artifacts. Cross-tool.
 
 ## What it does
 
-The `create-context` skill interviews the user, applies the framework decision rule, writes the right artifact from a matching template, validates the result, and runs an activation evidence check before declaring done.
+Provides skills that interview the user, classify intent against the framework, and emit structured artifacts the team's tools can validate. Four authoring skills (one per primitive) plus a migration skill that consolidates sprawling AI context into the canonical shape.
+
+## Primitives
+
+1. **Guardrail** — machine-enforced constraint (lint, type, hook, CI). The plugin emits a *recommendation*; the team wires enforcement.
+2. **Guide** — place-based knowledge. Canonical home: root or nested `AGENTS.md`.
+3. **Skill** — work-based expertise. Canonical home: `.agents/skills/<name>/SKILL.md`.
+4. **Subagent** — isolated execution. Canonical home: `.agents/agents/<name>.md`.
+
+Decision order — discover from code, then enforce mechanically, then guide, then skill, then subagent. Full doctrine in [`references/framework.md`](references/framework.md).
 
 ## Install
 
@@ -30,12 +37,14 @@ Follow the root [README](../../README.md) Codex section — `context-framework` 
 State intent.
 
 ```
-> I want AI to always run type checks with increased memory before committing
 > Create a skill for our PR description style
 > Write an AGENTS.md for packages/database
+> We need a subagent for adversarial review of auth changes
+> Make a rule for our auth code  →  triggers guardrail-recommendation flow
+> Audit our AI context and consolidate it
 ```
 
-The skill runs the interview, classifies (guardrail | guide | skill | delete), authors from the matching template, validates against `references/validators.md`, proves activation, and attaches an evidence sidecar next to the artifact.
+The matching authoring skill runs an interview, fills a template, and writes the artifact. `migrate-context` runs the 6-phase consolidation pipeline against an existing repo.
 
 ## Layout
 
@@ -44,36 +53,36 @@ context-framework/
   .claude-plugin/plugin.json
   .cursor-plugin/plugin.json
   .codex-plugin/plugin.json
-  skills/
-    create-context/
-      SKILL.md
   references/
-    framework.md       # doctrine — decision rule, containers, 9×5, budget
-    validators.md      # per-container Tier 1/2/3 checks
+    framework.md            # doctrine: primitives, decision order
+    manifesto.md            # philosophy: good DX = good agent UX
+    migration-process.md    # 12-phase doctrine + 6-phase plugin mapping
+    _doctrine.yaml          # canonical surface + schema fingerprints
+  schemas/                  # JSON Schema (draft 2020-12) for cross-boundary artifacts
+  skills/
+    create-guide/
+    create-skill/
+    create-subagent/
+    create-guardrail-recommendation/
+    migrate-context/        # 6 internal phases, resumable via resume-index.yaml
   templates/
-    AGENTS-entry.md    # root or nested guide
-    SKILL.md           # portable skill, sections mirror the validator
-    guardrail-spec.md  # machine-enforceable rule, not yet implemented
+    AGENTS.md
+    SKILL.md
+    subagent.md
+    guardrail-recommendation.md
+  evals/                    # dev-time only — run in this repo, not by consumers
+    self-conformance/       # Layer 1: mechanical plugin doctrine self-checks (bun)
+    self-discovery/         # Layer 2: trigger-rate proxy on skill descriptions (bun)
+    fixtures/{greenfield,messy}/
 ```
 
-## Doctrine in one paragraph
+## Boundary
 
-Three containers: **Guardrail** (machine-enforced), **Guide** (place-based), **Skill** (work-based). Two metadata fields: **reach** (repo/path/global/task) and **activation** (always/on path/on event/on match/on invoke). One decision rule: guardrail > guide > skill > delete, first match wins. Skill design follows the 9×5 grid (9 Anthropic domains × 5 ADK structural patterns) under three laws: constraints beat instructions, composition over classification, skills are living systems.
-
-Full doctrine: [`references/framework.md`](references/framework.md).
-
-## Cross-tool
-
-One canonical `AGENTS.md` and portable `SKILL.md`. Tool-specific *rule* files (`CLAUDE.md`, `.cursor/rules/*`, `copilot-instructions.md`, `GEMINI.md`, etc.) are **absent by default**. A thin `@import` shim is an extreme edge case — justified only when a tool cannot read canonical context *and* the content is load-bearing *and* upgrading the tool is not an option. Tool *mechanism* (plugin manifests, hooks, slash commands, MCP configs) stays in native surfaces. The skill does not author rule forks and will flag drift in evidence reports.
-
-**Portable activation.** Every tool-native activation mechanism has a portable replacement — Cursor glob rules → nested `AGENTS.md` or path hints inside a skill `description`; Claude slash commands → skill description with explicit trigger phrase; Claude hooks → guardrail-spec + repo tooling. Portable skills use a strict frontmatter allowlist (`name`, `description` only — `paths`, `globs`, and similar extensions break proactive matching in Claude and Cursor and are ignored by Codex). Defense in depth for prerequisite gates: `CRITICAL:` in the skill description + named gate in root `AGENTS.md` + nested pointer. Full mapping table in [`references/framework.md`](references/framework.md#portable-activation).
-
-When Cursor or Codex launchers are available locally, the activation evidence check runs against them too. When not, the skill runs a static portability check and labels the result `static only` so the gap is explicit.
+- **Skill** — interview, decide, fill template, write artifact. Judgment lives here.
+- **Template** — inert markdown with `<<placeholder>>` slots. No logic.
+- **Schema** — authoritative shape (JSON Schema draft 2020-12 in YAML).
+- **Validator** — skills self-validate inline by reading the schema and the artifact (required fields, enum membership, types). No runtime dependency on the consumer side. The plugin's own Layer 1 evals use bun + ajv in this repo only.
 
 ## Removability
 
-Every piece is a file. Delete the plugin folder and the plugin is gone. Delete a reference and the skill still authors with less rigor. Delete a template and the skill still runs and reports the missing template in evidence.
-
-## Contributing
-
-PRs welcome. New validators, sharper interview questions, additional templates. Keep to the framework's own budget: skill body ≤ 1,500 tokens, each reference ≤ 1,000 tokens.
+Every piece is a file. Delete the plugin folder, the plugin is gone. Delete a schema, the matching artifact still authors but loses validation. Delete a skill, the others still work.

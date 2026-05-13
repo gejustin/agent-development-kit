@@ -1,0 +1,13 @@
+---
+description: Repo-wide style rules for orderflow
+alwaysApply: true
+---
+
+# Style
+
+Use double quotes for imports and single quotes for string literals.
+Two-space indent. Trailing commas. Semicolons required.
+Prefer `const` over `let`. No `var`.
+Functions over classes unless state is needed.
+Maximum line length 100.
+Files end with a newline.

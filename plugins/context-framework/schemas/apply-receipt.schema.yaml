@@ -1,0 +1,95 @@
+# Pins the apply-phase receipt. Records exactly what was applied and the eval delta.
+# Produced by: skills/migrate-context (apply phase). Consumed by: review + grade phases.
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://context-framework/schemas/apply-receipt.schema.yaml"
+title: ApplyReceipt
+type: object
+additionalProperties: false
+required:
+  - applied_at
+  - plan_id
+  - commit_sha
+  - files_added
+  - files_modified
+  - files_deleted
+  - content_hashes
+  - before_after
+  - cross_tool_results
+properties:
+  applied_at:
+    type: string
+    format: date-time
+  plan_id:
+    type: string
+  commit_sha:
+    type: string
+  files_added:
+    type: array
+    items:
+      type: string
+  files_modified:
+    type: array
+    items:
+      type: string
+  files_deleted:
+    type: array
+    items:
+      type: string
+  content_hashes:
+    type: object
+    additionalProperties:
+      type: string
+      pattern: "^[a-f0-9]{64}$"
+  before_after:
+    type: object
+    additionalProperties: false
+    required:
+      - before_evals_passed
+      - after_evals_passed
+      - regressions
+    properties:
+      before_evals_passed:
+        type: integer
+        minimum: 0
+      after_evals_passed:
+        type: integer
+        minimum: 0
+      regressions:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+            - eval_id
+            - before_status
+            - after_status
+            - diff_summary
+          properties:
+            eval_id:
+              type: string
+            before_status:
+              type: string
+              enum: [pass, fail, unavailable]
+            after_status:
+              type: string
+              enum: [pass, fail, unavailable]
+            diff_summary:
+              type: string
+  cross_tool_results:
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - eval_id
+          - status
+        properties:
+          eval_id:
+            type: string
+          status:
+            type: string
+            enum: [pass, fail, unavailable]
+          reason:
+            type: string

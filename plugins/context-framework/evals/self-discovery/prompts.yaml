@@ -1,0 +1,107 @@
+# Layer 2 prompt set. Heuristic grader matches against each skill's description
+# trigger phrases. Goal: high TPR on intended triggers, low FPR on baits.
+#
+# Skills covered:
+#   - create-guardrail-recommendation
+#   - create-guide
+#   - create-skill
+#   - create-subagent
+#   - migrate-context
+
+intended_triggers:
+  # ---------- create-guardrail-recommendation (10) ----------
+  - { id: g1,  expected_skill: create-guardrail-recommendation, phrasing_type: direct,      prompt: "create a guardrail for migrations needing rollback notes" }
+  - { id: g2,  expected_skill: create-guardrail-recommendation, phrasing_type: direct,      prompt: "ban direct imports from internal in shared modules" }
+  - { id: g3,  expected_skill: create-guardrail-recommendation, phrasing_type: direct,      prompt: "make a rule for our auth code that always runs typecheck" }
+  - { id: g4,  expected_skill: create-guardrail-recommendation, phrasing_type: direct,      prompt: "add a lint rule for X" }
+  - { id: g5,  expected_skill: create-guardrail-recommendation, phrasing_type: paraphrase,  prompt: "enforce migrations have rollback notes" }
+  - { id: g6,  expected_skill: create-guardrail-recommendation, phrasing_type: paraphrase,  prompt: "agents should never edit generated files" }
+  - { id: g7,  expected_skill: create-guardrail-recommendation, phrasing_type: paraphrase,  prompt: "AI should always run typecheck before committing" }
+  - { id: g8,  expected_skill: create-guardrail-recommendation, phrasing_type: implicit,    prompt: "create a guardrail so agents never edit generated files" }
+  - { id: g9,  expected_skill: create-guardrail-recommendation, phrasing_type: implicit,    prompt: "make a rule that blocks PRs missing rollback notes" }
+  - { id: g10, expected_skill: create-guardrail-recommendation, phrasing_type: contextual,  prompt: "enforce that every database migration has a rollback note" }
+
+  # ---------- create-guide (10) ----------
+  - { id: gd1, expected_skill: create-guide, phrasing_type: direct,     prompt: "write an AGENTS.md for packages/database" }
+  - { id: gd2, expected_skill: create-guide, phrasing_type: direct,     prompt: "create a nested AGENTS.md for the auth package" }
+  - { id: gd3, expected_skill: create-guide, phrasing_type: direct,     prompt: "add agent context to apps/web" }
+  - { id: gd4, expected_skill: create-guide, phrasing_type: direct,     prompt: "add a note about graphql conventions to AGENTS.md" }
+  - { id: gd5, expected_skill: create-guide, phrasing_type: paraphrase, prompt: "document the landmines in this package" }
+  - { id: gd6, expected_skill: create-guide, phrasing_type: paraphrase, prompt: "create a nested AGENTS.md for packages/billing" }
+  - { id: gd7, expected_skill: create-guide, phrasing_type: paraphrase, prompt: "add a note about payments conventions to AGENTS.md" }
+  - { id: gd8, expected_skill: create-guide, phrasing_type: implicit,   prompt: "document the landmines in the auth package" }
+  - { id: gd9, expected_skill: create-guide, phrasing_type: contextual, prompt: "write an AGENTS.md for next/packages/ui capturing the package-specific landmines" }
+  - { id: gd10, expected_skill: create-guide, phrasing_type: contextual, prompt: "add agent context to the realtime service folder" }
+
+  # ---------- create-skill (10) ----------
+  - { id: s1,  expected_skill: create-skill, phrasing_type: direct,     prompt: "create a skill for accessibility review" }
+  - { id: s2,  expected_skill: create-skill, phrasing_type: direct,     prompt: "add a skill for X reviews on graphql changes" }
+  - { id: s3,  expected_skill: create-skill, phrasing_type: direct,     prompt: "we need a skill that handles changelog entries" }
+  - { id: s4,  expected_skill: create-skill, phrasing_type: direct,     prompt: "make a portable skill for release validation" }
+  - { id: s5,  expected_skill: create-skill, phrasing_type: direct,     prompt: "add a SKILL.md for incident triage" }
+  - { id: s6,  expected_skill: create-skill, phrasing_type: paraphrase, prompt: "we want reusable work-based expertise for security reviews" }
+  - { id: s7,  expected_skill: create-skill, phrasing_type: paraphrase, prompt: "make a portable skill for PR descriptions" }
+  - { id: s8,  expected_skill: create-skill, phrasing_type: paraphrase, prompt: "skill for changelog entries" }
+  - { id: s9,  expected_skill: create-skill, phrasing_type: implicit,   prompt: "add a skill for component migrations" }
+  - { id: s10, expected_skill: create-skill, phrasing_type: contextual, prompt: "we need a skill that handles testing strategy reviews" }
+
+  # ---------- create-subagent (10) ----------
+  - { id: sa1,  expected_skill: create-subagent, phrasing_type: direct,     prompt: "create a subagent for adversarial review" }
+  - { id: sa2,  expected_skill: create-subagent, phrasing_type: direct,     prompt: "subagent for adversarial review of auth diffs" }
+  - { id: sa3,  expected_skill: create-subagent, phrasing_type: direct,     prompt: "agent for deep research on payments" }
+  - { id: sa4,  expected_skill: create-subagent, phrasing_type: direct,     prompt: "separate agent to verify the migration result" }
+  - { id: sa5,  expected_skill: create-subagent, phrasing_type: direct,     prompt: "fresh-eyes review agent for security investigations" }
+  - { id: sa6,  expected_skill: create-subagent, phrasing_type: paraphrase, prompt: "we want isolated context and a result-only return for accessibility audits" }
+  - { id: sa7,  expected_skill: create-subagent, phrasing_type: paraphrase, prompt: "create a subagent that does test gap analysis" }
+  - { id: sa8,  expected_skill: create-subagent, phrasing_type: implicit,   prompt: "agent for deep research on the billing domain" }
+  - { id: sa9,  expected_skill: create-subagent, phrasing_type: contextual, prompt: "subagent for adversarial review of the auth refactor" }
+  - { id: sa10, expected_skill: create-subagent, phrasing_type: contextual, prompt: "separate agent to verify the migration result on staging" }
+
+  # ---------- migrate-context (10) ----------
+  - { id: m1,  expected_skill: migrate-context, phrasing_type: direct,     prompt: "audit our AI context and consolidate it" }
+  - { id: m2,  expected_skill: migrate-context, phrasing_type: direct,     prompt: "migrate AGENTS.md and CLAUDE.md into the canonical structure" }
+  - { id: m3,  expected_skill: migrate-context, phrasing_type: direct,     prompt: "clean up our AI context sprawl" }
+  - { id: m4,  expected_skill: migrate-context, phrasing_type: direct,     prompt: "consolidate scattered agent instructions" }
+  - { id: m5,  expected_skill: migrate-context, phrasing_type: direct,     prompt: "run a context migration on this repo" }
+  - { id: m6,  expected_skill: migrate-context, phrasing_type: paraphrase, prompt: "we have sprawl in our agent files, fix it" }
+  - { id: m7,  expected_skill: migrate-context, phrasing_type: paraphrase, prompt: "clean up cursor rules and merge them with our AGENTS.md" }
+  - { id: m8,  expected_skill: migrate-context, phrasing_type: implicit,   prompt: "our claude skills and cursor rules drift apart constantly — audit and consolidate" }
+  - { id: m9,  expected_skill: migrate-context, phrasing_type: contextual, prompt: "we have sprawl in our agent files across cursor and claude — fix it" }
+  - { id: m10, expected_skill: migrate-context, phrasing_type: contextual, prompt: "audit our AI context across the repo and consolidate it slice by slice" }
+
+false_positive_baits:
+  # adjacent-but-different domains
+  - { id: b1,  expected_skill: null, category: adjacent,      prompt: "write a test for the auth module" }
+  - { id: b2,  expected_skill: null, category: adjacent,      prompt: "add typescript types to this function" }
+  - { id: b3,  expected_skill: null, category: adjacent,      prompt: "refactor the user service to use dependency injection" }
+  - { id: b4,  expected_skill: null, category: adjacent,      prompt: "set up eslint with the airbnb config" }
+  - { id: b5,  expected_skill: null, category: adjacent,      prompt: "fix the failing CI pipeline" }
+  - { id: b6,  expected_skill: null, category: adjacent,      prompt: "configure prettier for this repo" }
+  - { id: b7,  expected_skill: null, category: adjacent,      prompt: "deploy the staging environment" }
+  - { id: b8,  expected_skill: null, category: adjacent,      prompt: "investigate why our login flow is slow" }
+  - { id: b9,  expected_skill: null, category: adjacent,      prompt: "rotate the production database credentials" }
+  - { id: b10, expected_skill: null, category: adjacent,      prompt: "scaffold a new express endpoint for billing" }
+
+  # vague conversational
+  - { id: b11, expected_skill: null, category: vague,         prompt: "help me think through the architecture" }
+  - { id: b12, expected_skill: null, category: vague,         prompt: "what do you think of this approach" }
+  - { id: b13, expected_skill: null, category: vague,         prompt: "summarize this PR" }
+  - { id: b14, expected_skill: null, category: vague,         prompt: "give me a status update" }
+  - { id: b15, expected_skill: null, category: vague,         prompt: "what changed since yesterday" }
+  - { id: b16, expected_skill: null, category: vague,         prompt: "open a draft pr for these changes" }
+  - { id: b17, expected_skill: null, category: vague,         prompt: "explain this regex to me" }
+  - { id: b18, expected_skill: null, category: vague,         prompt: "what's the difference between react server components and client components" }
+  - { id: b19, expected_skill: null, category: vague,         prompt: "translate this comment to spanish" }
+  - { id: b20, expected_skill: null, category: vague,         prompt: "is this code idiomatic typescript" }
+
+  # look-alike phrasing — should NOT match
+  - { id: b21, expected_skill: null, category: lookalike,     prompt: "review this PR for security issues" }
+  - { id: b22, expected_skill: null, category: lookalike,     prompt: "agents should be careful with this codebase" }
+  - { id: b23, expected_skill: null, category: lookalike,     prompt: "audit our test coverage" }
+  - { id: b24, expected_skill: null, category: lookalike,     prompt: "consolidate the duplicate utility functions across packages" }
+  - { id: b25, expected_skill: null, category: lookalike,     prompt: "add a comment explaining why we use a specific token format" }
+  - { id: b26, expected_skill: null, category: lookalike,     prompt: "investigate the auth bug we hit yesterday" }
+  - { id: b27, expected_skill: null, category: lookalike,     prompt: "review the work the previous agent did" }
+  - { id: b28, expected_skill: null, category: lookalike,     prompt: "make our codebase more discoverable for new hires" }
+  - { id: b29, expected_skill: null, category: lookalike,     prompt: "the realtime service has weird conventions — explain them to me" }
+  - { id: b30, expected_skill: null, category: lookalike,     prompt: "fresh check on this PR diff" }

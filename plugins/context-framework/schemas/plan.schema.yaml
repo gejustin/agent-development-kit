@@ -1,0 +1,122 @@
+# Pins the migration plan artifact. YAML object describing moves, deletions, new artifacts, evals.
+# Produced by: skills/migrate-context (plan phase). Consumed by: apply phase.
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://context-framework/schemas/plan.schema.yaml"
+title: Plan
+type: object
+additionalProperties: false
+required:
+  - plan_version
+  - slice
+  - moves
+  - deletions
+  - new_artifacts
+  - evals
+properties:
+  plan_version:
+    type: integer
+    minimum: 1
+  slice:
+    type: string
+  moves:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - from_path
+        - to_path
+        - rule_ids
+        - merge_strategy
+      properties:
+        from_path:
+          type: string
+        to_path:
+          type: string
+        rule_ids:
+          type: array
+          items:
+            type: string
+        merge_strategy:
+          type: string
+          enum: [append, replace, merge]
+  deletions:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - path
+        - rule_ids
+        - reason
+      properties:
+        path:
+          type: string
+        rule_ids:
+          type: array
+          items:
+            type: string
+        reason:
+          type: string
+  new_artifacts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - path
+        - kind
+        - rule_ids
+      properties:
+        path:
+          type: string
+        kind:
+          type: string
+          enum:
+            - AGENTS_md
+            - CLAUDE_md
+            - cursor_rule
+            - cursor_skill
+            - claude_skill
+            - claude_command
+            - shared_skill
+            - bugbot
+            - hook
+            - workflow_other
+        rule_ids:
+          type: array
+          items:
+            type: string
+  dependencies:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - requires
+        - enables
+      properties:
+        requires:
+          type: string
+        enables:
+          type: string
+  evals:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - prompt
+        - target_dimension
+        - expected
+      properties:
+        id:
+          type: string
+        prompt:
+          type: string
+        target_dimension:
+          type: string
+          enum: [discovery, trigger, task, regression]
+        expected:
+          type: string
