@@ -9,18 +9,15 @@
 doctrine_version: 1
 plugin_version: 0.1.0
 
-# Vendored doctrine documents. Hash check on these guards against silent
-# drift between source doctrine and the plugin's local copy.
+# Vendored doctrine documents. These are the canonical surface for this plugin.
+# Hash check on these guards against silent drift between releases.
 references:
   - path: references/framework.md
     role: framework
-    source: ~/.frank/memory/work/projects/context-engineering/framework.md
   - path: references/manifesto.md
     role: manifesto
-    source: ~/.frank/memory/work/projects/context-engineering/ai-friendliness-manifesto.md
   - path: references/migration-process.md
     role: migration-process
-    source: ~/.frank/memory/work/projects/context-engineering/migration-process.md
 
 # Four primitives. Names are canonical; aliases forbidden.
 primitives:
