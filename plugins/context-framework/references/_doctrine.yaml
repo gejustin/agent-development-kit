@@ -1,0 +1,87 @@
+# Canonical surface for the context-framework plugin.
+# This file is the single source of truth for what the plugin ships, what
+# schema versions are pinned, and what doctrine the skills consume.
+#
+# Validators read this file to verify self-conformance (Layer 1 evals).
+# Migration writes the plugin_version + doctrine_version into the target
+# repo's `.workflow-context/resume-index.yaml` so upgrades are detectable.
+
+doctrine_version: 1
+plugin_version: 0.1.0
+
+# Vendored doctrine documents. Hash check on these guards against silent
+# drift between source doctrine and the plugin's local copy.
+references:
+  - path: references/framework.md
+    role: framework
+    source: ~/.frank/memory/work/projects/context-engineering/framework.md
+  - path: references/manifesto.md
+    role: manifesto
+    source: ~/.frank/memory/work/projects/context-engineering/ai-friendliness-manifesto.md
+  - path: references/migration-process.md
+    role: migration-process
+    source: ~/.frank/memory/work/projects/context-engineering/migration-process.md
+
+# Four primitives. Names are canonical; aliases forbidden.
+primitives:
+  - name: guardrail
+    canonical_home: lint | typecheck | hook | CI | runtime guard
+    plugin_emits: recommendation (not enforcement)
+  - name: guide
+    canonical_home: AGENTS.md (root or nested)
+  - name: skill
+    canonical_home: .agents/skills/<name>/SKILL.md
+  - name: subagent
+    canonical_home: .agents/agents/<name>.md
+
+# Cross-boundary schemas. Every artifact that crosses a phase or skill
+# boundary is pinned here. Consumer skills self-validate inline against
+# these schemas (no runtime dependency). The plugin's own Layer 1 evals
+# validate the schemas themselves using ajv (bun) in this repo only.
+schemas:
+  - id: guardrail-recommendation
+    path: schemas/guardrail-recommendation.schema.yaml
+    producer: skills/create-guardrail-recommendation
+    consumers: [team]
+  - id: inventory
+    path: schemas/inventory.schema.yaml
+    producer: skills/migrate-context (plan phase)
+    consumers: [skills/migrate-context (plan phase, apply phase)]
+  - id: classifications
+    path: schemas/classifications.schema.yaml
+    producer: skills/migrate-context (plan phase)
+    consumers: [skills/migrate-context (apply phase)]
+  - id: plan
+    path: schemas/plan.schema.yaml
+    producer: skills/migrate-context (plan phase)
+    consumers: [skills/migrate-context (apply phase)]
+  - id: apply-receipt
+    path: schemas/apply-receipt.schema.yaml
+    producer: skills/migrate-context (apply phase)
+    consumers: [skills/migrate-context (review phase, grade phase)]
+  - id: resume-index
+    path: schemas/resume-index.schema.yaml
+    producer: skills/migrate-context (every phase)
+    consumers: [skills/migrate-context (every phase)]
+
+# Migration phase order. The migrate-context skill runs these internally.
+# Source doctrine has 12 phases; mapping documented in references/migration-process.md.
+migration_phases:
+  - onboard
+  - plan
+  - apply
+  - enrich
+  - review
+  - grade
+
+# Forbidden strings. Validators fail if any appear in plugin source.
+forbidden_strings:
+  # Stale primitive names from earlier iterations.
+  - guardrail-spec
+  - guardrail-specs
+  - GUARDRAIL_SPEC
+  - GUIDE_GLOB
+  # Parallel taxonomies that drift from source doctrine.
+  - 9x5 grid
+  - 9×5 grid
+  - 9x5 skill grid

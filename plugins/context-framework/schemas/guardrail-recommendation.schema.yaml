@@ -1,0 +1,71 @@
+# Pins the guardrail recommendation artifact (one rec per file).
+# Produced by: skills/create-guardrail-recommendation. Consumed by: team triage.
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://context-framework/schemas/guardrail-recommendation.schema.yaml"
+title: GuardrailRecommendation
+type: object
+additionalProperties: false
+required:
+  - id
+  - source
+  - rule
+  - why_enforce
+  - scope
+  - recommended_mechanism
+  - priority
+  - recommended_action
+  - validation_signal
+  - status
+  - evidence
+properties:
+  id:
+    type: string
+    pattern: "^[a-z0-9][a-z0-9-]*$"
+  source:
+    type: string
+  rule:
+    type: string
+  why_enforce:
+    type: string
+  scope:
+    type: string
+    enum: [repo, path, package, task]
+  recommended_mechanism:
+    type: string
+    enum: [lint, typecheck, hook, test, ci-gate, runtime-guard, generator]
+  priority:
+    type: string
+    enum: [P0, P1, P2]
+  current_home:
+    type: string
+  recommended_action:
+    type: string
+  interim_instruction:
+    type: string
+  validation_signal:
+    type: string
+  status:
+    type: string
+    enum: [proposed, accepted, rejected, implemented]
+  evidence:
+    type: array
+    items:
+      type: string
+  developer_decision:
+    type: object
+    additionalProperties: false
+    required:
+      - decided_by
+      - decided_at
+      - outcome
+    properties:
+      decided_by:
+        type: string
+      decided_at:
+        type: string
+        format: date-time
+      outcome:
+        type: string
+        enum: [accepted, rejected, deferred]
+      notes:
+        type: string

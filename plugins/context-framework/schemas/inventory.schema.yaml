@@ -1,0 +1,46 @@
+# Pins the inventory artifact (TSV → list of dicts). One row per context carrier.
+# Produced by: skills/migrate-context (onboard phase). Consumed by: plan phase.
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://context-framework/schemas/inventory.schema.yaml"
+title: Inventory
+type: array
+items:
+  type: object
+  additionalProperties: false
+  required:
+    - path
+    - kind
+    - bytes
+    - last_modified
+    - reach
+    - activation
+  properties:
+    path:
+      type: string
+    kind:
+      type: string
+      enum:
+        - AGENTS_md
+        - CLAUDE_md
+        - cursor_rule
+        - cursor_skill
+        - claude_skill
+        - claude_command
+        - shared_skill
+        - bugbot
+        - hook
+        - workflow_other
+    bytes:
+      type: integer
+      minimum: 0
+    last_modified:
+      type: string
+      format: date
+    reach:
+      type: string
+      enum: [global, repo, path, task]
+    activation:
+      type: string
+      enum: [always, on_path, on_event, on_match, on_invoke]
+    notes:
+      type: string

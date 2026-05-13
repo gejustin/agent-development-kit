@@ -1,17 +1,17 @@
 {
   "name": "context-framework",
   "version": "0.1.0",
-  "description": "Interview-driven authoring of AI context (skills, AGENTS.md guides, guardrail specs) against a portable context framework, with evidence attached",
+  "description": "Context engineering framework — 4 primitives (Guardrail, Guide, Skill, Subagent), migration pipeline, mechanical evals.",
   "author": {
     "name": "Gary Justin"
   },
   "license": "MIT",
   "keywords": [
-    "ai-context",
-    "skills",
-    "agents-md",
-    "guardrails",
     "context-engineering",
-    "authoring"
+    "agents-md",
+    "skills",
+    "subagents",
+    "migration",
+    "evals"
   ]
 }
